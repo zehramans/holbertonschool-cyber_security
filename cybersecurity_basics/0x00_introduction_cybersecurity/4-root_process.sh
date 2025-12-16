@@ -1,3 +1,2 @@
 #!/bin/bash
-users = $1
-ps -u $users | grep -v "      0     0"
+ps aux -U $1 --no-headers | grep -v "      0     0"
