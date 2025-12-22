@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo iptables -t filter --list
+sudo iptables -t filter -L
