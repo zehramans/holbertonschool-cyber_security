@@ -25,8 +25,8 @@
 ## Name Servers
 - Current authoritative name servers not publicly detailed in latest checks (propagation tools returned insufficient data).
 - Likely managed via AWS Route 53 or a similar provider, common for CloudFront-hosted sites.
-holbertonschool.com.    5       IN      A       99.83.190.102
-holbertonschool.com.    5       IN      A       75.2.70.75
+- holbertonschool.com.    5       IN      A       99.83.190.102
+- holbertonschool.com.    5       IN      A       75.2.70.75
 
 ## Mail Servers
 - Current MX records not publicly detailed in latest checks (propagation tools returned insufficient data).
