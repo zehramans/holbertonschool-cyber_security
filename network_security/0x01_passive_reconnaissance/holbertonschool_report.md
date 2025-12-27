@@ -10,17 +10,17 @@
 - Note: CloudFront uses dynamic anycast IPs, so resolutions can vary by geographic location and time. Specific edge IPs change frequently.
 
 ### Subdomains found with Subfinder
-lvl2-discourse-staging.holbertonschool.com
-rails-assets.holbertonschool.com
-v1.holbertonschool.com
-v2.holbertonschool.com
-www.holbertonschool.com
-blog.holbertonschool.com
-read.holbertonschool.com
-staging-apply-forum.holbertonschool.com
-staging-rails-assets-apply.holbertonschool.com
-yriry2.holbertonschool.com
-apply.holbertonschool.com
+- lvl2-discourse-staging.holbertonschool.com
+- rails-assets.holbertonschool.com
+- v1.holbertonschool.com
+- v2.holbertonschool.com
+- www.holbertonschool.com
+- blog.holbertonschool.com
+- read.holbertonschool.com
+- staging-apply-forum.holbertonschool.com
+- staging-rails-assets-apply.holbertonschool.com
+- yriry2.holbertonschool.com
+- apply.holbertonschool.com
 
 ## Name Servers
 - Current authoritative name servers not publicly detailed in latest checks (propagation tools returned insufficient data).
@@ -31,11 +31,11 @@ holbertonschool.com.    5       IN      A       75.2.70.75
 ## Mail Servers
 - Current MX records not publicly detailed in latest checks (propagation tools returned insufficient data).
 - Historically and typically: Google Workspace servers (aspmx.l.google.com and alternates) — highly likely still in use for organizational email.
-holbertonschool.com     mail exchanger = 5 alt2.aspmx.l.google.com.
-holbertonschool.com     mail exchanger = 1 aspmx.l.google.com.
-holbertonschool.com     mail exchanger = 10 alt3.aspmx.l.google.com.
-holbertonschool.com     mail exchanger = 10 alt4.aspmx.l.google.com.
-holbertonschool.com     mail exchanger = 5 alt1.aspmx.l.google.com.
+- holbertonschool.com     mail exchanger = 5 alt2.aspmx.l.google.com.
+- holbertonschool.com     mail exchanger = 1 aspmx.l.google.com.
+- holbertonschool.com     mail exchanger = 10 alt3.aspmx.l.google.com.
+- holbertonschool.com     mail exchanger = 10 alt4.aspmx.l.google.com.
+- holbertonschool.com     mail exchanger = 5 alt1.aspmx.l.google.com.
 
 ## Technologies and Frameworks
 Based on cross-verified public data, site behavior, and common stacks for similar educational landing pages:
