@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo nmap -PU53,161,162 $1
+sudo nmap -PU53,161,162 -sn $1
