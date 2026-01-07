@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo nmap -PR $1 -sn
+sudo nmap -PR $1 -O
