@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# 1. Take the input argument
-input=$1
+# 1. Remove the {xor} prefix
+input="${1#"{xor}"}"
 
-# 2. Remove the "{xor}" prefix if it exists
-clean_input="${input#"{xor}"}"
-
-# 3. Pipe the clean string into base64
-echo "$clean_input" | base64 -d
+# 2. Decode Base64 and XOR each byte with '_'
+echo "$input" | base64 -d | perl -pe '$_ ^= "_" x length'
