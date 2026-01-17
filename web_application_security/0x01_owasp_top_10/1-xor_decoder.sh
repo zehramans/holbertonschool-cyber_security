@@ -1,2 +1,6 @@
 #!/bin/bash
-base64 -d $1
+input=$1
+
+clean_input="${input#"{xor}"}"
+
+base64 -d $clean_input
