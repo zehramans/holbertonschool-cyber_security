@@ -1,4 +1,2 @@
 #!/bin/bash
-input="${1#"{xor}"}"
-
-echo "$input" | base64 -d | perl -pe '$_ ^= "_" x length'
+python3 -c "from base64 import b64decode; print(bytes(byte ^ 0x5f for byte in b64decode('$1'.replace('{xor}', ''))).decode('utf-8'))"
