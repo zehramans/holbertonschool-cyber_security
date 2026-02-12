@@ -1,2 +1,2 @@
 #!/bin/bash
-awk -F'=' '/^smtpd_tls_security_level/ {gsub(/ /, "", $2); val=$2} END {print (val == "" || val == "none") ? "STARTTLS not configured" : "smtpd_tls_security_level =" val}' /etc/postfix/main.cf
+postconf -n 2>/dev/null | grep -q "^smtpd_tls_security_level = \(may\|encrypt\)" && postconf -n | grep "^smtpd_tls_security_level" || echo "STARTTLS not configured"
