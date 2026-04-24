@@ -1,2 +1,2 @@
-#!/bin/nash
+#!/bin/bash
 sudo nmap -sV --script=default "$1"
