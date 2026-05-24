@@ -1,88 +1,77 @@
 #!/usr/bin/env ruby
+
 require 'optparse'
 
 TASKS_FILE = 'tasks.txt'
 
-# Helper method to load tasks from the file
 def load_tasks
-  if File.exist?(TASKS_FILE)
-    File.readlines(TASKS_FILE).map(&:chomp)
+  return [] unless File.exist?(TASKS_FILE)
+  File.readlines(TASKS_FILE).map(&:chomp)
+end
+
+def save_tasks(tasks)
+  File.write(TASKS_FILE, tasks.join("\n") + (tasks.empty? ? '' : "\n"))
+end
+
+def add_task(task)
+  tasks = load_tasks
+  tasks << task
+  save_tasks(tasks)
+  puts "Task '#{task}' added."
+end
+
+def list_tasks
+  tasks = load_tasks
+  if tasks.empty?
+    puts 'No tasks found.'
   else
-    []
+    tasks.each_with_index { |task, i| puts "#{i + 1}. #{task}" }
   end
 end
 
-# Helper method to save tasks back to the file
-def save_tasks(tasks)
-  File.open(TASKS_FILE, 'w') do |file|
-    tasks.each { |task| file.puts(task) }
+def remove_task(index)
+  tasks = load_tasks
+  i = index.to_i - 1
+  if i < 0 || i >= tasks.length
+    puts "Invalid index: #{index}"
+  else
+    removed = tasks.delete_at(i)
+    save_tasks(tasks)
+    puts "Task '#{removed}' removed."
   end
 end
 
 options = {}
 
-# Define and parse options
-opt_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: cli.rb [options]"
+parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: cli.rb [options]'
 
-  opts.on("-a", "--add TASK", "Add a new task") do |task|
+  opts.on('-a', '--add TASK', 'Add a new task') do |task|
     options[:add] = task
   end
 
-  opts.on("-l", "--list", "List all tasks") do
+  opts.on('-l', '--list', 'List all tasks') do
     options[:list] = true
   end
 
-  opts.on("-r", "--remove INDEX", "Remove a task by index") do |index|
-    options[:remove] = index.to_i
+  opts.on('-r', '--remove INDEX', 'Remove a task by index') do |index|
+    options[:remove] = index
   end
 
-  opts.on("-h", "--help", "Show help") do
+  opts.on('-h', '--help', 'Show help') do
     puts opts
     exit
   end
 end
 
-# Parse ARGV. If no valid options are provided, or -h is called, OptionParser handles it.
-begin
-  opt_parser.parse!
-rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
-  puts e.message
-  puts opt_parser
-  exit 1
-end
+parser.parse!
 
-# Execute behavior based on options
 if options[:add]
-  tasks = load_tasks
-  tasks << options[:add]
-  save_tasks(tasks)
-  puts "Task '#{options[:add]}' added."
-
+  add_task(options[:add])
 elsif options[:list]
-  tasks = load_tasks
-  if tasks.empty?
-    puts "No tasks found."
-  else
-    tasks.each_with_index do |task, idx|
-      puts "#{idx + 1}. #{task}"
-    end
-  end
-
+  list_tasks
 elsif options[:remove]
-  tasks = load_tasks
-  index = options[:remove] - 1 # Convert 1-based UI index to 0-based array index
-
-  if index >= 0 && index < tasks.length
-    removed_task = tasks.delete_at(index)
-    save_tasks(tasks)
-    puts "Task '#{removed_task}' removed."
-  else
-    puts "Error: Invalid task index."
-    exit 1
-  end
-
+  remove_task(options[:remove])
 else
-  # Default behavior if executed without arguments
-  puts opt_parser
+  puts parser
 end
