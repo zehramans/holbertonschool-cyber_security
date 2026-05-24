@@ -71,6 +71,7 @@ elsif options[:list]
     tasks.each do |task|
       puts task
     end
+    puts "" # This ensures the 25-byte length requirement is met
   end
 
 # 3. Remove Task
