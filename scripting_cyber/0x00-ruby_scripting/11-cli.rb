@@ -6,7 +6,6 @@ TASK_FILE = 'tasks.txt'
 # Helper method to read tasks from the file
 def read_tasks
   if File.exist?(TASK_FILE)
-    # Read lines and strip newlines, ignoring empty lines
     File.readlines(TASK_FILE).map(&:strip).reject(&:empty?)
   else
     []
@@ -68,15 +67,16 @@ elsif options[:list]
   if tasks.empty?
     puts "No tasks found."
   else
-    tasks.each_with_index do |task, index|
-      puts "#{index + 1}. #{task}"
+    puts "Tasks:"
+    tasks.each do |task|
+      puts task
     end
   end
 
 # 3. Remove Task
 elsif options[:remove]
   tasks = read_tasks
-  index_to_remove = options[:remove] - 1 # Convert 1-based UI index to 0-based array index
+  index_to_remove = options[:remove] - 1
 
   if index_to_remove >= 0 && index_to_remove < tasks.length
     removed_task = tasks.delete_at(index_to_remove)
