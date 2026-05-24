@@ -1,27 +1,27 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
-TASK_FILE = 'tasks.txt'
+TASKS_FILE = 'tasks.txt'
 
-# Helper method to read tasks from the file
-def read_tasks
-  if File.exist?(TASK_FILE)
-    File.readlines(TASK_FILE).map(&:strip).reject(&:empty?)
+# Helper method to load tasks from the file
+def load_tasks
+  if File.exist?(TASKS_FILE)
+    File.readlines(TASKS_FILE).map(&:chomp)
   else
     []
   end
 end
 
-# Helper method to write tasks back to the file
-def write_tasks(tasks)
-  File.open(TASK_FILE, 'w') do |file|
+# Helper method to save tasks back to the file
+def save_tasks(tasks)
+  File.open(TASKS_FILE, 'w') do |file|
     tasks.each { |task| file.puts(task) }
   end
 end
 
 options = {}
 
-# Initialize OptionParser
+# Define and parse options
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: cli.rb [options]"
 
@@ -43,51 +43,46 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-# Parse the command-line arguments
+# Parse ARGV. If no valid options are provided, or -h is called, OptionParser handles it.
 begin
-  opt_parser.parse!(ARGV)
+  opt_parser.parse!
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   puts e.message
   puts opt_parser
   exit 1
 end
 
-# --- Action Logic ---
-
-# 1. Add Task
+# Execute behavior based on options
 if options[:add]
-  tasks = read_tasks
+  tasks = load_tasks
   tasks << options[:add]
-  write_tasks(tasks)
+  save_tasks(tasks)
   puts "Task '#{options[:add]}' added."
 
-# 2. List Tasks
 elsif options[:list]
-  tasks = read_tasks
+  tasks = load_tasks
   if tasks.empty?
     puts "No tasks found."
   else
-    puts "Tasks:"
-    tasks.each do |task|
-      puts task
+    tasks.each_with_index do |task, idx|
+      puts "#{idx + 1}. #{task}"
     end
-    puts "" # This ensures the 25-byte length requirement is met
   end
 
-# 3. Remove Task
 elsif options[:remove]
-  tasks = read_tasks
-  index_to_remove = options[:remove] - 1
+  tasks = load_tasks
+  index = options[:remove] - 1 # Convert 1-based UI index to 0-based array index
 
-  if index_to_remove >= 0 && index_to_remove < tasks.length
-    removed_task = tasks.delete_at(index_to_remove)
-    write_tasks(tasks)
+  if index >= 0 && index < tasks.length
+    removed_task = tasks.delete_at(index)
+    save_tasks(tasks)
     puts "Task '#{removed_task}' removed."
   else
     puts "Error: Invalid task index."
+    exit 1
   end
 
-# 4. Default behavior (No options passed)
 else
+  # Default behavior if executed without arguments
   puts opt_parser
 end
